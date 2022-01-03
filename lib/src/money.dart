@@ -513,7 +513,7 @@ class Money implements Comparable<Money> {
   bool operator ==(dynamic other) =>
       other is Money &&
       isInSameCurrencyAs(other) &&
-      other._minorUnits == _minorUnits;
+      other.amount == amount;
   /// END CUSTOMIZING
 
   /// Returns `true` when this money is less than [other].
