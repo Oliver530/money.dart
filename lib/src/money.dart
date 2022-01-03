@@ -505,12 +505,16 @@ class Money implements Comparable<Money> {
     return amount.compareTo(other.amount);
   }
 
+  /// START CUSTOMIZING
+  /// Reason: Freezed package crashes on equality check with Freezed() (e.g. when changing the price of a bottle)
   /// Returns `true` if [other] is the same amount of money in
   /// the same currency.
   @override
-  bool operator ==(covariant Money other) =>
-      identical(this, other) ||
-      (isInSameCurrencyAs(other) && other.amount == amount);
+  bool operator ==(dynamic other) =>
+      other is Money &&
+      isInSameCurrencyAs(other) &&
+      other._minorUnits == _minorUnits;
+  /// END CUSTOMIZING
 
   /// Returns `true` when this money is less than [other].
   ///
