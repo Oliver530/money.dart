@@ -1,3 +1,8 @@
+/* Copyright (C) S. Brett Sutton - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Brett Sutton <bsutton@onepub.dev>, Jan 2022
+ */
 import 'package:decimal/decimal.dart';
 import 'package:money2/money2.dart';
 // ignore_for_file: avoid_print
@@ -5,7 +10,7 @@ import 'package:money2/money2.dart';
 void main() {
   /// Create money from Fixed amount
 
-  final fixed = Fixed.fromInt(100, scale: 2);
+  final fixed = Fixed.fromInt(100);
   Money.parse('1.23', code: 'AUD');
 
   Money.fromFixed(fixed, code: 'AUD');
@@ -174,8 +179,8 @@ void main() {
   // $US 11.00
 
   // retrieve all registered currencies
-  final Iterable<Currency> registeredCurrencies = Currencies().getRegistered();
-  final Iterable<String> codes = registeredCurrencies.map((c) => c.code);
+  final registeredCurrencies = Currencies().getRegistered();
+  final codes = registeredCurrencies.map((c) => c.code);
   print(codes);
   // (USD, AUD, EUR, JPY)
 }

@@ -1,3 +1,9 @@
+/* Copyright (C) S. Brett Sutton - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Brett Sutton <bsutton@onepub.dev>, Jan 2022
+ */
+
 import '../money.dart';
 import 'exchange_rate.dart';
 
@@ -51,26 +57,24 @@ class ExchangePlatform {
     throw UnknownExchangeRateException(from.currency.code, to);
   }
 
-  _CodePair _generate(CurrencyCode from, CurrencyCode to) {
-    return '$from:$to';
-  }
+  _CodePair _generate(CurrencyCode from, CurrencyCode to) => '$from:$to';
 }
 
 /// Thrown if an attempt is made to calcuate the value of a [Money] amount
 /// in another currency for which there isn't a registered exchange rate.
 class UnknownExchangeRateException implements MoneyException {
+  /// Thrown if no exchange rate exists between [from] and [to]
+  UnknownExchangeRateException(this.from, this.to);
+
   /// The from currency code in the unknown exchange
   CurrencyCode from;
 
   /// The to  currency code in the unknown exchange
   CurrencyCode to;
 
-  /// Thrown if no exchange rate exists between [from] and [to]
-  UnknownExchangeRateException(this.from, this.to);
-
   @override
-  String toString() {
-    return "An unknown currency exchange was attempted from: '$from' to: '$to'. Register the ExchangeRate"
-        ' via [ExchangePlatform.register()] and try again.';
-  }
+  String toString() =>
+      "An unknown currency exchange was attempted from: '$from' to: '$to'. "
+      'Register the ExchangeRate'
+      ' via [ExchangePlatform.register()] and try again.';
 }

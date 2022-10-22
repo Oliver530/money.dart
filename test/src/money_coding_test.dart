@@ -1,43 +1,21 @@
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) 2016 - 2019 LitGroup LLC
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the 'Software'), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+/* Copyright (C) S. Brett Sutton - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Brett Sutton <bsutton@onepub.dev>, Jan 2022
  */
 
 import 'package:money2/money2.dart';
-import 'package:money2/src/money_data.dart';
 import 'package:test/test.dart';
 
 class _TestEncoder implements MoneyEncoder<String> {
   @override
-  String encode(MoneyData data) {
-    return '${data.currency.code} ${data.amount.minorUnits}';
-  }
+  String encode(MoneyData data) =>
+      '${data.currency.code} ${data.amount.minorUnits}';
 }
 
 class _TestDecoder implements MoneyDecoder<MoneyData> {
   @override
-  MoneyData decode(MoneyData encoded) {
-    return encoded;
-  }
+  MoneyData decode(MoneyData encoded) => encoded;
 }
 
 class _FailingDecoder implements MoneyDecoder<String> {
@@ -54,7 +32,7 @@ void main() {
     test('has properties: minorUnits, currency', () {
       final minorUnits = BigInt.from(100);
 
-      final data = MoneyData.from(Fixed.fromBigInt(minorUnits, scale: 2), usd);
+      final data = MoneyData.from(Fixed.fromBigInt(minorUnits), usd);
       expect(data.amount.minorUnits, equals(minorUnits));
       expect(data.amount.scale, equals(2));
       expect(data.currency, equals(usd));

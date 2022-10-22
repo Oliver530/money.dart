@@ -1,3 +1,8 @@
+/* Copyright (C) S. Brett Sutton - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Brett Sutton <bsutton@onepub.dev>, Jan 2022
+ */
 import '../../money2.dart';
 
 typedef CurrencyCode = String;
@@ -12,25 +17,23 @@ typedef CurrencyCode = String;
 ///
 /// AUD 1.00 = USD 65c.
 ///
-/// The target currency as defined by [toCode] describes the
-/// currency of the [Money] instance that is returned by the excchange.
-///
-/// The [scale] for the [exchangeRate] should normally be quoted to
-/// a high precision such as 8 decimal places.
-///
-/// The [toScale] is the scale of the resulting [Money] amount. If not
-/// supplied the scale of the [toCode]'s currency is used.
-///
 class ExchangeRate {
-  /// Create an exchnage rate from a [Fixed] decimal.
+  /// Create an exchange rate from a [Fixed] decimal.
+  ///
+  /// The target currency, as defined by [toCode], describes the
+  /// currency of the [Money] instance that is returned by the excchange.
   ///
   /// The [toScale] is the scale of the resulting [Money] amount. If not
   /// supplied the scale of the [toCode]'s currency is used.
+  ///
+  /// The [toScale] for the [exchangeRate] should normally be quoted to
+  /// a high precision such as 8 decimal places.
+  ///
   factory ExchangeRate.fromFixed(Fixed exchangeRate,
           {required CurrencyCode fromCode,
           required CurrencyCode toCode,
           int? toScale}) =>
-      ExchangeRate.fromFixedWitCurrency(exchangeRate,
+      ExchangeRate.fromFixedWithCurrency(exchangeRate,
           fromCurrency: _findCurrency(fromCode),
           toCurrency: _findCurrency(toCode),
           toScale: toScale);
@@ -38,8 +41,8 @@ class ExchangeRate {
   /// Create an exchange rate from a [Fixed] decimal.
   ///
   /// The [toScale] is the scale of the resulting [Money] amount. If not
-  /// supplied the scale of the [toCode]'s currency is used.
-  ExchangeRate.fromFixedWitCurrency(this.exchangeRate,
+  /// supplied the scale of the [toCurrency]'s currency is used.
+  ExchangeRate.fromFixedWithCurrency(this.exchangeRate,
       {required this.fromCurrency, required this.toCurrency, this.toScale});
 
   /// Create an exchange rate from an integer holding minor units
@@ -62,7 +65,7 @@ class ExchangeRate {
   /// to the provided [scale].
   ///
   /// The [toScale] is the scale of the resulting [Money] amount. If not
-  /// supplied the scale of the [toCode]'s currency is used.
+  /// supplied the scale of the [toCurrency]'s currency is used.
   ExchangeRate.fromMinorUnitsWithCurrency(int exchangeRateMinorUnits,
       {required int scale,
       required this.fromCurrency,
@@ -94,7 +97,7 @@ class ExchangeRate {
   /// The amount is stored with  [scale] decimal places.
   ///
   /// The [toScale] is the scale of the resulting [Money] amount. If not
-  /// supplied the scale of the [toCode]'s currency is
+  /// supplied the scale of the [toCurrency]'s currency is
   ExchangeRate.fromNumWithCurrency(
     num rateAsNum, {
     required int scale,
@@ -115,8 +118,7 @@ class ExchangeRate {
   factory ExchangeRate.fromBigInt(BigInt exchangeRateMinorUnits,
           {required int scale,
           required CurrencyCode fromCode,
-          required CurrencyCode toCode,
-          int? toScale}) =>
+          required CurrencyCode toCode}) =>
       ExchangeRate.fromBigIntWithCurrency(exchangeRateMinorUnits,
           scale: scale,
           fromCurrency: _findCurrency(fromCode),
@@ -160,7 +162,7 @@ class ExchangeRate {
 
     /// convertedUnits now has this.scale + exchangeRate.scale
     /// scale.
-    var convertedUnits = amount.amount * exchangeRate;
+    final convertedUnits = amount.amount * exchangeRate;
 
     return Money.fromFixed(convertedUnits,
         code: toCurrency.code, scale: toScale ?? toCurrency.scale);
@@ -192,13 +194,10 @@ class ExchangeRate {
     return currency;
   }
 
-  // We use a [Money] to take advantage of its formatting capabiities.
-  // An exchange rate isn't a money amount but we can use the same format
-  // to display it.
+  // Display the exchange rate as a fixed decimal
   @override
-  String toString() => '${toCurrency.symbol}$exchangeRate';
+  String toString() => exchangeRate.toString();
 
   /// Formats the [exchangeRate] using the given [pattern]
-  String format(String pattern) =>
-      Money.fromFixed(exchangeRate, code: toCurrency.code).format(pattern);
+  String format(String pattern) => exchangeRate.format(pattern);
 }

@@ -1,25 +1,7 @@
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) 2016 - 2019 LitGroup LLC
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the 'Software'), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+/* Copyright (C) S. Brett Sutton - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Brett Sutton <bsutton@onepub.dev>, Jan 2022
  */
 
 /// Money2 stores, parses, formats and allows precision mathematical operations
@@ -55,7 +37,8 @@
 /// * symbol - the currency symbol. e.g. '$'. It should be noted that not
 ///    every currency has a symbol.
 /// * pattern - a pattern used to control the display format.
-/// * precision - the number of decimal places assumed when a minor unit value (e.g. cents) is passed.
+/// * precision - the number of decimal places assumed when a minor unit value
+///      (e.g. cents) is passed.
 /// * decimal separator - the character that separates the fraction part
 ///    from the integer of a number e.g. '10.99'. This defaults to '.'
 ///    but can be changed to ','
@@ -88,12 +71,18 @@
 
 library money2;
 
+import 'src/currency.dart';
+import 'src/exchange_rates/exchange_platform.dart';
+import 'src/money.dart';
+
+export 'package:fixed/fixed.dart';
+
 export 'src/common_currencies.dart';
 export 'src/currencies.dart';
 export 'src/currency.dart';
 export 'src/encoders.dart';
-export 'src/money.dart';
-export 'src/pattern_encoder.dart' show IllegalPatternException;
-export 'src/exchange_rates/exchange_rate.dart';
 export 'src/exchange_rates/exchange_platform.dart';
-export 'package:fixed/fixed.dart';
+export 'src/exchange_rates/exchange_rate.dart';
+export 'src/money.dart';
+export 'src/money_data.dart';
+export 'src/pattern_encoder.dart' show IllegalPatternException;
